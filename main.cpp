@@ -19,19 +19,19 @@ void EvitarRepeticao(int vet[], int x) {
         while(count < size) {
             switch(x) {
                 case 0: 
-                    num = rand() % 15 + 1;
+                    num = rand() % 15 + 1; // Números entre 1 e 15
                 break;
                 case 1:
-                    num = rand() % (30 - 16 + 1) + 16;
+                    num = rand() % (30 - 16 + 1) + 16; // Números entre 16 e 30
                 break;
                 case 2:
-                    num = rand() % (45 - 31 + 1) + 31;
+                    num = rand() % (45 - 31 + 1) + 31; // Números entre 31 e 45
                 break; 
                 case 3:
-                    num = rand() % (60 - 46 + 1) + 46;
+                    num = rand() % (60 - 46 + 1) + 46; // Números entre 46 e 60
                 break;
                 case 4:
-                    num = rand() % (75 - 61 + 1) + 61;
+                    num = rand() % (75 - 61 + 1) + 61; // Números entre 61 e 75
                 break;
             }
         bool unique = true;
@@ -77,9 +77,9 @@ void popularMatriz(int mat[5][5]) {
                mat[i][j] = rand() % 15 + 1;
 
                vet[j] = mat[i][j];
-               if(j == 4) {
+               if(j == TAM_COLUNA - 1) {
                   EvitarRepeticao(vet, i);
-                  for(int k = 0; k < 5; k++) {
+                  for(int k = 0; k < TAM_COLUNA; k++) {
                    mat[i][k] = vet[k];
                   }
                }
@@ -88,9 +88,9 @@ void popularMatriz(int mat[5][5]) {
                 mat[i][j] = rand() % (30 - 16 + 1) + 16;
                 
                 vet[j] = mat[i][j];
-                if(j == 4) {
+                if(j == TAM_COLUNA - 1) {
                     EvitarRepeticao(vet, i);
-                      for(int k = 0; k < 5; k++) {
+                      for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
                 }
@@ -98,9 +98,9 @@ void popularMatriz(int mat[5][5]) {
             if(i == 2) {
                 mat[i][j] = rand() % (45 - 31 + 1) + 31;
                 vet[j] = mat[i][j];
-                if(j == 4) {
+                if(j == TAM_COLUNA - 1) {
                     EvitarRepeticao(vet, i);
-                      for(int k = 0; k < 5; k++) {
+                      for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
                 }
@@ -108,9 +108,9 @@ void popularMatriz(int mat[5][5]) {
             if(i == 3) {
                 mat[i][j] = rand() % (60 - 46 + 1) + 46;
                 vet[j] = mat[i][j];
-                if(j == 4) {
+                if(j == TAM_COLUNA - 1) {
                     EvitarRepeticao(vet, i);
-                      for(int k = 0; k < 5; k++) {
+                      for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
                 }
@@ -118,29 +118,56 @@ void popularMatriz(int mat[5][5]) {
             if(i == 4) {
                 mat[i][j] = rand() % (75 - 61 + 1) + 61;
                 vet[j] = mat[i][j];
-                if(j == 4) {
+                if(j == TAM_COLUNA - 1) {
                     EvitarRepeticao(vet, i);
-                      for(int k = 0; k < 5; k++) {
+                      for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
                 }
             }
         }
     }
-    
+}
+
+void mostrarMatriz(int mat[5][5]) {
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
-            cout<<mat[i][j]<< " ";
+            cout<<mat[i][j]<<" ";
         }
         cout<<endl;
     }
 }
 
-//Primeira linha – sorteados valores de 1 a 15;
-//• Segunda linha – sorteados valores de 16 a 30;
-//• Terceira linha – sorteados valores de 31 a 45;
-//• Quarta linha – sorteados valores de 46 a 60; e
-//• Quinta linha – sorteados valores de 61 a 75.
+int sortearNumero() {
+    int num = rand() % 75; // Números entre 1 e 15
+
+    return num;
+}
+
+int pegarNumeroSorteado() {
+    char tecla;
+    int sortNumber;
+    cout<<"Digite Enter para sortear o numero: ";
+    tecla = cin.get();
+    sortNumber = sortearNumero();
+    return sortNumber;
+}
+
+void adicionaSorteio(int vet[], int &size, int sorteio) {
+    if(size < 75) {
+        vet[size] = sorteio;
+        size++;
+    } else {
+        cout<<"O array esta cheio";
+    } 
+    
+}
+
+// Primeira linha – sorteados valores de 1 a 15;
+// Segunda linha – sorteados valores de 16 a 30;
+// Terceira linha – sorteados valores de 31 a 45;
+// Quarta linha – sorteados valores de 46 a 60; e
+// Quinta linha – sorteados valores de 61 a 75.
 
 int main()
 {
@@ -148,7 +175,8 @@ int main()
     
     while(menu) {
         int opt;
-        cout<<"SELECIONE A OPÇÃO DO MENU: "<<endl;
+        int size = 0;
+        cout<<"SELECIONE A OPCAO DO MENU: "<<endl;
         cout<<"OPCAO 0 - JOGAR"<<endl;
         cout<<"OPCAO 1 - SOBRE"<<endl;
         cout<<"OPCAO 2 - SAIR"<<endl;
@@ -159,6 +187,9 @@ int main()
         
         switch(opt) {
             case 0: 
+                int sortNumber;
+                bool isRunning;
+                int sortNumbers[75];
                 int matOne[5][5];
                 int matTwo[5][5];
                 int matThree[5][5];
@@ -166,11 +197,17 @@ int main()
                 int matFive[5][5];
                 
                 popularMatriz(matOne);
+                //mostrarMatriz(matOne);
+
+                while(isRunning) {
+                    sortNumber = pegarNumeroSorteado();
+                    adicionaSorteio(sortNumbers, size, sortNumber);
+                }
             break;
             
             case 1: 
-                cout<<"Trabalho realizado para a disciplina de algoritmos e programação II por:"<<endl
-                    <<"Miguel Pezzini Kühr, Eduarda, Rafael Barbosa e Mariah Bork em setembro de 2024"<<endl<<endl ;
+                cout<<"Trabalho realizado para a disciplina de algoritmos e programacao II por:"<<endl
+                    <<"Miguel Pezzini Kuhr, Eduarda, Rafael Barbosa e Mariah Bork em setembro de 2024"<<endl<<endl ;
             break;
         }
     }
