@@ -1,17 +1,9 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime> 
 using namespace std;
 
-void EvitarRepeticao(int vet[], int x) {
+void EvitarRepeticaoEOrdernarCrescente(int vet[], int x) {
     int count = 0, size = 5, temp = 0, swapped = true, num = 0;
     bool decrescent = true;
     srand(static_cast<unsigned>(time(0)));
@@ -61,8 +53,7 @@ void EvitarRepeticao(int vet[], int x) {
         }
     }
 
-
-void popularMatriz(int mat[5][5]) {
+void preencherCartela(int mat[5][5]) {
     srand(static_cast<unsigned>(time(0)));
     
     int vet[5];
@@ -78,7 +69,7 @@ void popularMatriz(int mat[5][5]) {
 
                vet[j] = mat[i][j];
                if(j == TAM_COLUNA - 1) {
-                  EvitarRepeticao(vet, i);
+                  EvitarRepeticaoEOrdernarCrescente(vet, i);
                   for(int k = 0; k < TAM_COLUNA; k++) {
                    mat[i][k] = vet[k];
                   }
@@ -89,7 +80,7 @@ void popularMatriz(int mat[5][5]) {
                 
                 vet[j] = mat[i][j];
                 if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticao(vet, i);
+                    EvitarRepeticaoEOrdernarCrescente(vet, i);
                       for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
@@ -99,7 +90,7 @@ void popularMatriz(int mat[5][5]) {
                 mat[i][j] = rand() % (45 - 31 + 1) + 31;
                 vet[j] = mat[i][j];
                 if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticao(vet, i);
+                    EvitarRepeticaoEOrdernarCrescente(vet, i);
                       for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
@@ -109,7 +100,7 @@ void popularMatriz(int mat[5][5]) {
                 mat[i][j] = rand() % (60 - 46 + 1) + 46;
                 vet[j] = mat[i][j];
                 if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticao(vet, i);
+                    EvitarRepeticaoEOrdernarCrescente(vet, i);
                       for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
@@ -119,7 +110,7 @@ void popularMatriz(int mat[5][5]) {
                 mat[i][j] = rand() % (75 - 61 + 1) + 61;
                 vet[j] = mat[i][j];
                 if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticao(vet, i);
+                    EvitarRepeticaoEOrdernarCrescente(vet, i);
                       for(int k = 0; k < TAM_COLUNA; k++) {
                        mat[i][k] = vet[k];
                       }
@@ -129,7 +120,8 @@ void popularMatriz(int mat[5][5]) {
     }
 }
 
-void mostrarMatriz(int mat[5][5]) {
+void mostrarCartela(int mat[5][5]) {
+    cout<<endl;
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
             cout<<mat[i][j]<<" ";
@@ -147,20 +139,70 @@ int sortearNumero() {
 int pegarNumeroSorteado() {
     char tecla;
     int sortNumber;
-    cout<<"Digite Enter para sortear o numero: ";
     tecla = cin.get();
     sortNumber = sortearNumero();
     return sortNumber;
 }
 
-void adicionaSorteio(int vet[], int &size, int sorteio) {
-    if(size < 75) {
-        vet[size] = sorteio;
-        size++;
+bool sorteioPresente(int vet[], int tamanhoDaListaDeSorteio, int num) {
+    for (int i = 0; i < tamanhoDaListaDeSorteio; ++i) {
+        if (vet[i] == num) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void adicionaSorteio(int vet[], int &tamanhoDaListaDeSorteio, int sorteio) {
+    int temp = 0;
+    bool trocou = true;
+    bool numeroUnico = false;
+
+    while(!numeroUnico) {
+        sorteio = rand() % 75 + 1;
+        if(!sorteioPresente(vet, tamanhoDaListaDeSorteio, sorteio)) {
+            numeroUnico = true;
+        }
+    }
+
+    if(tamanhoDaListaDeSorteio < 75) {
+        vet[tamanhoDaListaDeSorteio] = sorteio;
+        tamanhoDaListaDeSorteio++;
     } else {
         cout<<"O array esta cheio";
     } 
-    
+
+
+    while(trocou) {
+        trocou = false;
+        for(int i = 0; i < tamanhoDaListaDeSorteio - 1; i++) {
+            if(vet[i] > vet[i + 1]) {
+                trocou = true;
+                temp = vet[i];
+                vet[i] = vet[i + 1];
+                vet[i + 1] = temp;
+            }
+        }
+    }
+}
+
+void mostrarSorteio(int vet[], int tamanhoDaListaDeSorteio) {
+    cout<<"Numeros sorteados: ";
+    for(int i = 0; i < tamanhoDaListaDeSorteio; i++) {
+        cout<<vet[i]<<" ";
+    }
+}
+
+void marcarBingo(int listaDeSorteios[], int tamanhoDaListaDeSorteio, int cartelaDoBingo[5][5]) {
+    for(int i = 0; i <tamanhoDaListaDeSorteio; i++) {
+        for(int j = 0; j < 5; j++) {
+            for(int k = 0; k < 5; k++) {
+                if(cartelaDoBingo[j][k] == listaDeSorteios[i]) {
+                    cartelaDoBingo[j][k] = 0;
+                }
+            }
+        }
+    }
 }
 
 // Primeira linha – sorteados valores de 1 a 15;
@@ -175,7 +217,7 @@ int main()
     
     while(menu) {
         int opt;
-        int size = 0;
+        int tamanhoDaListaDeSorteio = 0;
         cout<<"SELECIONE A OPCAO DO MENU: "<<endl;
         cout<<"OPCAO 0 - JOGAR"<<endl;
         cout<<"OPCAO 1 - SOBRE"<<endl;
@@ -187,21 +229,24 @@ int main()
         
         switch(opt) {
             case 0: 
-                int sortNumber;
+                int numeroSorteado;
                 bool isRunning;
-                int sortNumbers[75];
-                int matOne[5][5];
-                int matTwo[5][5];
-                int matThree[5][5];
-                int matFour[5][5];
-                int matFive[5][5];
+                int listaDeSorteios[75];
+                int cartelaUm[5][5];
+                int cartelaDois[5][5];
+                int cartelaTres[5][5];
+                int cartelaQuatro[5][5];
+                int cartelaCinco[5][5];
                 
-                popularMatriz(matOne);
+                preencherCartela(cartelaUm);
                 //mostrarMatriz(matOne);
 
                 while(isRunning) {
-                    sortNumber = pegarNumeroSorteado();
-                    adicionaSorteio(sortNumbers, size, sortNumber);
+                    numeroSorteado = pegarNumeroSorteado();
+                    adicionaSorteio(listaDeSorteios, tamanhoDaListaDeSorteio, numeroSorteado);
+                    mostrarSorteio(listaDeSorteios, tamanhoDaListaDeSorteio);
+                    marcarBingo(listaDeSorteios, tamanhoDaListaDeSorteio, cartelaUm);  
+                    mostrarCartela(cartelaUm);     
                 }
             break;
             
