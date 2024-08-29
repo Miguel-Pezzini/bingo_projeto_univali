@@ -30,26 +30,25 @@ void textcolor (int forecolor, int backcolor) {
 
 void EvitarRepeticaoEOrdernarCrescente(int vet[], int x) {
     int count = 0, size = 5, temp = 0, swapped = true, num = 0;
-    bool decrescent = true;
 
-        while(count < size) {
-            switch(x) {
-                case 0:
-                    num = rand() % 15 + 1; // Números entre 1 e 15
-                break;
-                case 1:
-                    num = rand() % (30 - 16 + 1) + 16; // Números entre 16 e 30
-                break;
-                case 2:
-                    num = rand() % (45 - 31 + 1) + 31; // Números entre 31 e 45
-                break;
-                case 3:
-                    num = rand() % (60 - 46 + 1) + 46; // Números entre 46 e 60
-                break;
-                case 4:
-                    num = rand() % (75 - 61 + 1) + 61; // Números entre 61 e 75
-                break;
-            }
+    while(count < size) {
+        switch(x) {
+            case 0:
+                num = rand() % 15 + 1; // Números entre 1 e 15
+            break;
+            case 1:
+                num = rand() % (30 - 16 + 1) + 16; // Números entre 16 e 30
+            break;
+            case 2:
+                num = rand() % (45 - 31 + 1) + 31; // Números entre 31 e 45
+            break;
+            case 3:
+                num = rand() % (60 - 46 + 1) + 46; // Números entre 46 e 60
+            break;
+            case 4:
+                num = rand() % (75 - 61 + 1) + 61; // Números entre 61 e 75
+            break;
+        }
         bool unique = true;
 
         for(int i = 0; i < count; i++) {
@@ -63,82 +62,26 @@ void EvitarRepeticaoEOrdernarCrescente(int vet[], int x) {
             vet[count] = num;
             count++;
         }
-        }
-        while(swapped) {
-            swapped = false;
-            for(int i = 0; i < 5 - 1; i++) {
-                if(vet[i] > vet[i + 1]) {
-                    swapped = true;
-                    temp = vet[i];
-                    vet[i] = vet[i + 1];
-                    vet[i + 1] = temp;
-                }
+    }
+    while(swapped) {
+        swapped = false;
+        for(int i = 0; i < size - 1; i++) {
+            if(vet[i] > vet[i + 1]) {
+                swapped = true;
+                temp = vet[i];
+                vet[i] = vet[i + 1];
+                vet[i + 1] = temp;
             }
         }
     }
+}
 
 void preencherCartela(int mat[5][5]) {
-
     int vet[5];
-
-    int temp = 0;
-
-    int TAM_LINHA = 5;
-    int TAM_COLUNA = 5;
-    for(int i = 0; i < TAM_LINHA; i++) {
-        for(int j = 0; j < TAM_COLUNA; j++) {
-            if(i == 0) {
-               mat[i][j] = rand() % 15 + 1;
-
-               vet[j] = mat[i][j];
-               if(j == TAM_COLUNA - 1) {
-                  EvitarRepeticaoEOrdernarCrescente(vet, i);
-                  for(int k = 0; k < TAM_COLUNA; k++) {
-                   mat[i][k] = vet[k];
-                  }
-               }
-            }
-            if(i == 1) {
-                mat[i][j] = rand() % (30 - 16 + 1) + 16;
-
-                vet[j] = mat[i][j];
-                if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticaoEOrdernarCrescente(vet, i);
-                      for(int k = 0; k < TAM_COLUNA; k++) {
-                       mat[i][k] = vet[k];
-                      }
-                }
-            }
-            if(i == 2) {
-                mat[i][j] = rand() % (45 - 31 + 1) + 31;
-                vet[j] = mat[i][j];
-                if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticaoEOrdernarCrescente(vet, i);
-                      for(int k = 0; k < TAM_COLUNA; k++) {
-                       mat[i][k] = vet[k];
-                      }
-                }
-            }
-            if(i == 3) {
-                mat[i][j] = rand() % (60 - 46 + 1) + 46;
-                vet[j] = mat[i][j];
-                if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticaoEOrdernarCrescente(vet, i);
-                      for(int k = 0; k < TAM_COLUNA; k++) {
-                       mat[i][k] = vet[k];
-                      }
-                }
-            }
-            if(i == 4) {
-                mat[i][j] = rand() % (75 - 61 + 1) + 61;
-                vet[j] = mat[i][j];
-                if(j == TAM_COLUNA - 1) {
-                    EvitarRepeticaoEOrdernarCrescente(vet, i);
-                      for(int k = 0; k < TAM_COLUNA; k++) {
-                       mat[i][k] = vet[k];
-                      }
-                }
-            }
+    for(int i = 0; i < 5; i++) {
+        EvitarRepeticaoEOrdernarCrescente(vet, i);
+        for(int k = 0; k < 5; k++) {
+            mat[i][k] = vet[k];
         }
     }
 }
@@ -202,8 +145,10 @@ void adicionaSorteio(int vet[], int &tamanhoDaListaDeSorteio, int &sorteio) {
             numeroUnico = true;
         }
     }
-
-    cout<<"O numero sorteado e: "<<sorteio<<" ";
+    cout<<"O numero sorteado e: ";
+    textcolor(6, 0);
+    cout<<sorteio<<" ";
+    textcolor(7, 0);
 
     if(tamanhoDaListaDeSorteio < 75) {
         vet[tamanhoDaListaDeSorteio] = sorteio;
@@ -254,8 +199,8 @@ string inserirNome() {
     return nome;
 }
 
-void ganhou(string nome) {
-    cout<<endl<<"Parabens, o jogador: "<<nome<<" e o ganhador."<<endl<<endl;
+void ganhou(string nome, int identificador) {
+    cout<<endl<<"Parabens, o jogador: "<<nome<<" da cartela "<<identificador<<" e o ganhador."<<endl<<endl;
 }
 
 // Primeira linha – sorteados valores de 1 a 15;
@@ -276,6 +221,12 @@ int main()
     string nomeQuatro;
     string nomeCinco;
 
+    int identificadorCartelaUm = 1;
+    int identificadorCartelaDois = 2;
+    int identificadorCartelaTres = 3;
+    int identificadorCartelaQuatro = 4;
+    int identificadorCartelaCinco = 5;
+
 
     while(menu) {
         textcolor(7, 0);
@@ -293,10 +244,13 @@ int main()
         int opt;
         bool isRunning = true;
         int tamanhoDaListaDeSorteio = 0;
-        cout<<"SELECIONE A OPCAO DO MENU: "<<endl;
-        cout<<"OPCAO 0 - JOGAR"<<endl;
-        cout<<"OPCAO 1 - SOBRE"<<endl;
-        cout<<"OPCAO 2 - SAIR"<<endl;
+        cout << "+-----------------------------+" << endl;
+        cout << "|     MENU PRINCIPAL           |" << endl;
+        cout << "+-----------------------------+" << endl;
+        cout << "|     OPCAO 0 - JOGAR          |"<< endl;
+        cout << "|     OPCAO 1 - SOBRE          |"<< endl;
+        cout << "|     OPCAO 2 - SAIR           |"<< endl;
+        cout << "+-----------------------------+" << endl;
         cin>>opt;
         if(opt == 2) {
             menu = false;
@@ -304,6 +258,7 @@ int main()
 
         switch(opt) {
             case 0:
+                (void)system("cls");
                 int sorteio;
                 int listaDeSorteios[75];
                 int cartelaUm[5][5];
@@ -333,6 +288,7 @@ int main()
                     sorteio = pegarNumeroSorteado();
                     adicionaSorteio(listaDeSorteios, tamanhoDaListaDeSorteio, sorteio);
                     mostrarSorteio(listaDeSorteios, tamanhoDaListaDeSorteio);
+                    cout<<endl;
 
                     marcadoUm = marcarBingo(cartelaUm, sorteio);
                     marcadoDois = marcarBingo(cartelaDois, sorteio);
@@ -360,8 +316,6 @@ int main()
                         marcadoCincoTotal++;
                     }
 
-                    cout<<marcadoUmTotal;
-
                     mostrarCartela(cartelaUm, listaDeSorteios, tamanhoDaListaDeSorteio);
                     mostrarCartela(cartelaDois, listaDeSorteios, tamanhoDaListaDeSorteio);
                     mostrarCartela(cartelaTres, listaDeSorteios, tamanhoDaListaDeSorteio);
@@ -369,29 +323,30 @@ int main()
                     mostrarCartela(cartelaCinco, listaDeSorteios, tamanhoDaListaDeSorteio);
 
                     if(marcadoUmTotal == 25) {
-                        ganhou(nomeUm);
+                        ganhou(nomeUm, identificadorCartelaUm);
                         isRunning = false;
                     }
                     if(marcadoDoisTotal == 25) {
-                        ganhou(nomeDois);
+                        ganhou(nomeDois, identificadorCartelaDois);
                         isRunning = false;
                     }
                     if(marcadoTresTotal == 25) {
-                        ganhou(nomeTres);
+                        ganhou(nomeTres, identificadorCartelaTres);
                         isRunning = false;
                     }
                     if(marcadoQuatroTotal == 25) {
-                        ganhou(nomeQuatro);
+                        ganhou(nomeQuatro, identificadorCartelaQuatro);
                         isRunning = false;
                     }
                     if(marcadoCincoTotal == 25) {
-                        ganhou(nomeCinco);
+                        ganhou(nomeCinco, identificadorCartelaCinco);
                         isRunning = false;
                     }
                 }
             break;
 
             case 1:
+                (void)system("cls");
                 cout<<"Trabalho realizado para a disciplina de algoritmos e programacao II por:"<<endl
                     <<"Miguel Pezzini Kuhr, Eduarda, Rafael Barbosa e Mariah Bork em setembro de 2024"<<endl<<endl ;
             break;
