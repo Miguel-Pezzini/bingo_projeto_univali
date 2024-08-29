@@ -233,20 +233,18 @@ void mostrarSorteio(int vet[], int tamanhoDaListaDeSorteio) {
     }
 }
 
-int marcarBingo(int listaDeSorteios[], int tamanhoDaListaDeSorteio, int cartelaDoBingo[5][5]) {
+int marcarBingo(int cartelaDoBingo[5][5], int sorteio) {
     int marcado = 0;
-    for(int i = 0; i <tamanhoDaListaDeSorteio; i++) {
         for(int j = 0; j < 5; j++) {
             for(int k = 0; k < 5; k++) {
-                if(cartelaDoBingo[j][k] == listaDeSorteios[i]) {
+                if(cartelaDoBingo[j][k] == sorteio) {
                     marcado = 1;
                 }
             }
         }
+        return marcado;
     }
 
-    return marcado;
-}
 
 string inserirNome() {
     string nome;
@@ -268,6 +266,7 @@ void ganhou(string nome) {
 
 int main()
 {
+    textcolor(7, 0);
     srand(static_cast<unsigned int>(time(0)));
     bool menu = true;
 
@@ -277,19 +276,20 @@ int main()
     string nomeQuatro;
     string nomeCinco;
 
-    int marcadoUm = 0;
-    int marcadoDois = 0;
-    int marcadoTres = 0;
-    int marcadoQuatro = 0;
-    int marcadoCinco = 0;
-
-    int marcadoUmTotal = 0;
-    int marcadoDoisTotal = 0;
-    int marcadoTresTotal = 0;
-    int marcadoQuatroTotal = 0;
-    int marcadoCincoTotal = 0;
 
     while(menu) {
+        textcolor(7, 0);
+        int marcadoUm = 0;
+        int marcadoDois = 0;
+        int marcadoTres = 0;
+        int marcadoQuatro = 0;
+        int marcadoCinco = 0;
+
+        int marcadoUmTotal = 0;
+        int marcadoDoisTotal = 0;
+        int marcadoTresTotal = 0;
+        int marcadoQuatroTotal = 0;
+        int marcadoCincoTotal = 0;
         int opt;
         bool isRunning = true;
         int tamanhoDaListaDeSorteio = 0;
@@ -334,11 +334,11 @@ int main()
                     adicionaSorteio(listaDeSorteios, tamanhoDaListaDeSorteio, sorteio);
                     mostrarSorteio(listaDeSorteios, tamanhoDaListaDeSorteio);
 
-                    marcadoUm = marcarBingo(listaDeSorteios, tamanhoDaListaDeSorteio, cartelaUm);
-                    marcadoDois = marcarBingo(listaDeSorteios, tamanhoDaListaDeSorteio, cartelaDois);
-                    marcadoTres = marcarBingo(listaDeSorteios, tamanhoDaListaDeSorteio, cartelaTres);
-                    marcadoQuatro = marcarBingo(listaDeSorteios, tamanhoDaListaDeSorteio, cartelaQuatro);
-                    marcadoCinco = marcarBingo(listaDeSorteios, tamanhoDaListaDeSorteio, cartelaCinco);
+                    marcadoUm = marcarBingo(cartelaUm, sorteio);
+                    marcadoDois = marcarBingo(cartelaDois, sorteio);
+                    marcadoTres = marcarBingo(cartelaTres, sorteio);
+                    marcadoQuatro = marcarBingo(cartelaQuatro, sorteio);
+                    marcadoCinco = marcarBingo(cartelaCinco, sorteio);
 
                     if(marcadoUm == 1) {
                         marcadoUmTotal++;
@@ -359,6 +359,8 @@ int main()
                     if(marcadoCinco == 1) {
                         marcadoCincoTotal++;
                     }
+
+                    cout<<marcadoUmTotal;
 
                     mostrarCartela(cartelaUm, listaDeSorteios, tamanhoDaListaDeSorteio);
                     mostrarCartela(cartelaDois, listaDeSorteios, tamanhoDaListaDeSorteio);
