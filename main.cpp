@@ -7,32 +7,21 @@
 using namespace std;
 
 #define BLACK        0
-#define BLUE         1
-#define GREEN        2
-#define AQUA         3
-#define RED          4
-#define PURPLE       5
 #define YELLOW       6
 #define WHITE        7
-#define GRAY         8
-#define LIGHTBLUE    9
-#define LIGHTGREEN   10
-#define LIGHTAQUA    11
-#define LIGHTRED     12
-#define LIGHTPURPLE  13
-#define LIGHTYELLOW  14
-#define BRIGHTWHITE  15
-
 
 void textcolor (int forecolor, int backcolor) {
 	SetConsoleTextAttribute (GetStdHandle(STD_OUTPUT_HANDLE), (WORD) (forecolor | backcolor<<4));
 }
 
-void EvitarRepeticaoEOrdernarCrescente(int vet[], int x) {
-    int count = 0, size = 5, temp = 0, swapped = true, num = 0;
+void resetTextColor() {
+    textcolor(7, 0);
+}
 
-    while(count < size) {
-        switch(x) {
+// Gera um número aleatório da cartela dependendo do x (índice da linha)
+int gerarNumeroAleatorio(int x) {
+    int num = 0;
+    switch(x) {
             case 0:
                 num = rand() % 15 + 1; // Números entre 1 e 15
             break;
@@ -49,43 +38,81 @@ void EvitarRepeticaoEOrdernarCrescente(int vet[], int x) {
                 num = rand() % (75 - 61 + 1) + 61; // Números entre 61 e 75
             break;
         }
-        bool unique = true;
+        return num;
+}
 
+// Ordena o vetor para não repetir nenhum número, passa o x (índice da linha) como parâmetro para a função gerarNumeroAleatorio(x)
+void evitarRepeticao(int vet[], int x) {
+    int count = 0, size = 5, num = 0;
+    while(count < size) {
+        num = gerarNumeroAleatorio(x);
+        bool unique = true;
+    
         for(int i = 0; i < count; i++) {
             if(vet[i] == num) {
+                // Caso o número seja repetido então vai dar break e voltar para o ínicio do loop (gerando um novo número aleatório)
                 unique = false;
                 break;
             }
         }
-
+        // Caso o número seja único ent vai incrementar o count
         if(unique) {
             vet[count] = num;
+            // Caso o count seja igual ao size quer dizer que todos os números são únicos portando não existem números repetidos
             count++;
         }
     }
-    while(swapped) {
+}
+
+// Apenas pega o vetor e o ordena em ordem crescente com o bubble sort
+void ordenarCrescente(int vet[]) {
+    int size = 5, temp = 0, i = 0, j = 0;
+    bool swapped = true;
+
+    for (i=size-1; (i >= 1) && (swapped); i--) {
         swapped = false;
-        for(int i = 0; i < size - 1; i++) {
-            if(vet[i] > vet[i + 1]) {
+        for (j=0; j < i ;j++) {
+            if (vet[j+1] < vet[j]) {
+                temp = vet[j];
+                vet[j] = vet[j+1];
+                vet[j+1] = temp;
                 swapped = true;
-                temp = vet[i];
-                vet[i] = vet[i + 1];
-                vet[i + 1] = temp;
             }
         }
     }
 }
 
+// Preenche a cartela com as duas funções de ordenação para cada linha da matriz
 void preencherCartela(int mat[5][5]) {
     int vet[5];
     for(int i = 0; i < 5; i++) {
-        EvitarRepeticaoEOrdernarCrescente(vet, i);
+        evitarRepeticao(vet, i);
+        ordenarCrescente(vet);
         for(int k = 0; k < 5; k++) {
             mat[i][k] = vet[k];
         }
     }
 }
 
+// Compara duas cartelas para ter certeza que elas não vão se repetir
+bool compararCartelas(int cartelax[5][5], int cartelay[5][5]) {
+    int numerosRepetidos = 0;
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
+            if(cartelax[i][j] == cartelay[i][j]) {
+                numerosRepetidos++;
+            }
+        }
+    }
+
+    if(numerosRepetidos == 25) {
+        return true;
+    }
+
+    return false;
+}
+
+// Mostra a cartela com os números acertados da cor amarela e os demais da cor normal
 void mostrarCartela(int cartela[5][5], int listaDeSorteios[], int tamanhoDaListaDeSorteios) {
     cout<<endl;
     bool marcado[5][5] = { false };
@@ -106,17 +133,20 @@ void mostrarCartela(int cartela[5][5], int listaDeSorteios[], int tamanhoDaLista
                 textcolor(7, 0); // Cor branca para números não sorteados
             }
             cout << cartela[j][k] << " ";
+            resetTextColor();
         }
         cout << endl;
     }
 }
 
+// Função que retorna um número aleatório entre 1 e 75
 int sortearNumero() {
-    int num = rand() % 75; // Números entre 1 e 15
+    int num = rand() % 75; // Números entre 1 e 75
 
     return num;
 }
 
+// Função para gerar o número sorteado toda vez que for apertado a tecla enter
 int pegarNumeroSorteado() {
     char tecla;
     int sortNumber;
@@ -125,6 +155,7 @@ int pegarNumeroSorteado() {
     return sortNumber;
 }
 
+// Função que retorna um booleano true toda vez que o número já existe na lista e false caso ele não exista
 bool sorteioPresente(int vet[], int tamanhoDaListaDeSorteio, int num) {
     for (int i = 0; i < tamanhoDaListaDeSorteio; ++i) {
         if (vet[i] == num) {
@@ -134,9 +165,8 @@ bool sorteioPresente(int vet[], int tamanhoDaListaDeSorteio, int num) {
     return false;
 }
 
-void adicionaSorteio(int vet[], int &tamanhoDaListaDeSorteio, int &sorteio) {
-    int temp = 0;
-    bool trocou = true;
+// Função feita para não haver números repetidos na lista de sorteios
+void naoRepetirListaSorteio(int vet[], int tamanhoDaListaDeSorteio, int &sorteio) {
     bool numeroUnico = false;
 
     while(!numeroUnico) {
@@ -145,6 +175,31 @@ void adicionaSorteio(int vet[], int &tamanhoDaListaDeSorteio, int &sorteio) {
             numeroUnico = true;
         }
     }
+}
+
+// Ordenação da lista de sorteios em ordem crescente utilizando o bubble sort
+void ordernarSorteioBubbleSort(int vet[], int tamanhoDaListaDeSorteio) {
+    int i, j, cond, temp;
+    cond = 1;
+    for (i=tamanhoDaListaDeSorteio -1 ; (i >= 1) && (cond == 1); i--) {
+    cond = 0;
+        for (j=0; j < i ;j++) {
+            if (vet[j+1] < vet[j]) {
+                temp = vet[j];
+                vet[j] = vet[j+1];
+                vet[j+1] = temp;
+                cond = 1;
+            }
+        }
+    }
+}
+
+// Adiciona um item no sorteio depois de fazer as devidas ordenações
+void adicionaSorteio(int vet[], int &tamanhoDaListaDeSorteio, int &sorteio) {
+    bool numeroUnico = false;
+
+    naoRepetirListaSorteio(vet, tamanhoDaListaDeSorteio, sorteio);
+
     cout<<"O numero sorteado e: ";
     textcolor(6, 0);
     cout<<sorteio<<" ";
@@ -157,20 +212,10 @@ void adicionaSorteio(int vet[], int &tamanhoDaListaDeSorteio, int &sorteio) {
         cout<<"O array esta cheio";
     }
 
-
-    while(trocou) {
-        trocou = false;
-        for(int i = 0; i < tamanhoDaListaDeSorteio - 1; i++) {
-            if(vet[i] > vet[i + 1]) {
-                trocou = true;
-                temp = vet[i];
-                vet[i] = vet[i + 1];
-                vet[i + 1] = temp;
-            }
-        }
-    }
+    ordernarSorteioBubbleSort(vet, tamanhoDaListaDeSorteio);
 }
 
+// Função que mostra a lista de sorteios
 void mostrarSorteio(int vet[], int tamanhoDaListaDeSorteio) {
     cout<<"Numeros sorteados: ";
     for(int i = 0; i < tamanhoDaListaDeSorteio; i++) {
@@ -178,6 +223,7 @@ void mostrarSorteio(int vet[], int tamanhoDaListaDeSorteio) {
     }
 }
 
+// Função que retorna 1 se um item da cartela for marcado para cada sorteio e 0 caso não for marcado
 int marcarBingo(int cartelaDoBingo[5][5], int sorteio) {
     int marcado = 0;
         for(int j = 0; j < 5; j++) {
@@ -188,9 +234,9 @@ int marcarBingo(int cartelaDoBingo[5][5], int sorteio) {
             }
         }
         return marcado;
-    }
+}
 
-
+// Função que retorna string para escrever nome
 string inserirNome() {
     string nome;
     cout<<"Digite o seu nome da sua cartela: ";
@@ -199,15 +245,10 @@ string inserirNome() {
     return nome;
 }
 
+// Mensagem padrão para o vencedor
 void ganhou(string nome, int identificador) {
     cout<<endl<<"Parabens, o jogador: "<<nome<<" da cartela "<<identificador<<" e o ganhador."<<endl<<endl;
 }
-
-// Primeira linha – sorteados valores de 1 a 15;
-// Segunda linha – sorteados valores de 16 a 30;
-// Terceira linha – sorteados valores de 31 a 45;
-// Quarta linha – sorteados valores de 46 a 60; e
-// Quinta linha – sorteados valores de 61 a 75.
 
 int main()
 {
@@ -236,6 +277,8 @@ int main()
         int marcadoQuatro = 0;
         int marcadoCinco = 0;
 
+        bool cartelasRepetidas = true;
+
         int marcadoUmTotal = 0;
         int marcadoDoisTotal = 0;
         int marcadoTresTotal = 0;
@@ -261,18 +304,27 @@ int main()
                 (void)system("cls");
                 int sorteio;
                 int listaDeSorteios[75];
+
                 int cartelaUm[5][5];
                 int cartelaDois[5][5];
                 int cartelaTres[5][5];
                 int cartelaQuatro[5][5];
                 int cartelaCinco[5][5];
 
-                preencherCartela(cartelaUm);
-                preencherCartela(cartelaDois);
-                preencherCartela(cartelaTres);
-                preencherCartela(cartelaQuatro);
-                preencherCartela(cartelaCinco);
+                while(cartelasRepetidas) {
+                    preencherCartela(cartelaUm);
+                    preencherCartela(cartelaDois);
+                    preencherCartela(cartelaTres);
+                    preencherCartela(cartelaQuatro);
+                    preencherCartela(cartelaCinco);
 
+                    cartelasRepetidas = compararCartelas(cartelaUm, cartelaDois);
+                    cartelasRepetidas = compararCartelas(cartelaDois, cartelaTres);
+                    cartelasRepetidas = compararCartelas(cartelaTres, cartelaQuatro);
+                    cartelasRepetidas = compararCartelas(cartelaQuatro, cartelaCinco);
+                }
+
+                // Criar os nomes de cada cartela
                 nomeUm = inserirNome();
                 nomeDois = inserirNome();
                 nomeTres = inserirNome();
@@ -324,30 +376,30 @@ int main()
 
                     if(marcadoUmTotal == 25) {
                         ganhou(nomeUm, identificadorCartelaUm);
-                        isRunning = false;
+                        break;
                     }
                     if(marcadoDoisTotal == 25) {
                         ganhou(nomeDois, identificadorCartelaDois);
-                        isRunning = false;
+                        break;
                     }
                     if(marcadoTresTotal == 25) {
                         ganhou(nomeTres, identificadorCartelaTres);
-                        isRunning = false;
+                        break;
                     }
                     if(marcadoQuatroTotal == 25) {
                         ganhou(nomeQuatro, identificadorCartelaQuatro);
-                        isRunning = false;
+                        break;
                     }
                     if(marcadoCincoTotal == 25) {
                         ganhou(nomeCinco, identificadorCartelaCinco);
-                        isRunning = false;
+                        break;
                     }
                 }
             break;
 
             case 1:
                 (void)system("cls");
-                cout<<"Trabalho realizado para a disciplina de algoritmos e programacao II por:"<<endl
+                cout<<"Trabalho realizado para a disciplina de algoritmos e programacao II do professor Rafael Ballottin Martins por:"<<endl
                     <<"Miguel Pezzini Kuhr, Eduarda, Rafael Barbosa e Mariah Bork em setembro de 2024"<<endl<<endl ;
             break;
         }
