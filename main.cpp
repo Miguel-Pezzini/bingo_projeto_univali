@@ -94,8 +94,7 @@ void preencherCartela(int mat[5][5]) {
     }
 }
 
-// Compara duas cartelas para ter certeza que elas não vão se repetir
-bool compararCartelas(int cartelax[5][5], int cartelay[5][5]) {
+bool duasCartelasIguais(int cartelax[5][5], int cartelay[5][5]) {
     int numerosRepetidos = 0;
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
@@ -110,6 +109,21 @@ bool compararCartelas(int cartelax[5][5], int cartelay[5][5]) {
     }
 
     return false;
+}
+
+// Compara duas cartelas para ter certeza que elas não vão se repetir
+bool compararCartelas(int cartelaUm[5][5], int cartelaDois[5][5], int cartelaTres[5][5], int cartelaQuatro[5][5], int cartelaCinco[5][5]) {
+    
+    return duasCartelasIguais(cartelaUm, cartelaDois) &&
+           duasCartelasIguais(cartelaUm, cartelaTres) &&
+           duasCartelasIguais(cartelaUm, cartelaQuatro) &&
+           duasCartelasIguais(cartelaUm, cartelaCinco) &&
+           duasCartelasIguais(cartelaDois, cartelaTres) &&
+           duasCartelasIguais(cartelaDois, cartelaQuatro) &&
+           duasCartelasIguais(cartelaDois, cartelaCinco) &&
+           duasCartelasIguais(cartelaTres, cartelaQuatro) &&
+           duasCartelasIguais(cartelaTres, cartelaCinco) &&
+           duasCartelasIguais(cartelaQuatro, cartelaCinco);
 }
 
 // Mostra a cartela com os números acertados da cor amarela e os demais da cor normal
@@ -318,10 +332,7 @@ int main()
                     preencherCartela(cartelaQuatro);
                     preencherCartela(cartelaCinco);
 
-                    cartelasRepetidas = compararCartelas(cartelaUm, cartelaDois);
-                    cartelasRepetidas = compararCartelas(cartelaDois, cartelaTres);
-                    cartelasRepetidas = compararCartelas(cartelaTres, cartelaQuatro);
-                    cartelasRepetidas = compararCartelas(cartelaQuatro, cartelaCinco);
+                    cartelasRepetidas = compararCartelas(cartelaUm, cartelaDois, cartelaTres, cartelaQuatro, cartelaCinco);
                 }
 
                 // Criar os nomes de cada cartela
