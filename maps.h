@@ -3,8 +3,9 @@
 #include <vector> // Adicione esta linha para usar std::vector
 
 using namespace std;
-void houseMap(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial);
-void mapOne(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial);
+void houseMap(vector<vector<int>>& mat, int x, int y);
+void mapOne(vector<vector<int>>& mat, int x, int y);
+void labOne(vector<vector<int>>& mat, int x, int y);
 void seeMap(vector<vector<int>>& mat);
 
 #endif

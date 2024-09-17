@@ -26,48 +26,17 @@ CHAR getch() {
     return c;
 }
 
-
-
-struct Attack {
-    string name;
-    int power;
-    int levelToLearn;
-};
-struct Pokemon {
-    int id;
-    string name;
-    int level;
-    Attack attacks[4];
-};
-
-struct Item {
-    int id;
-    string name;
-    string type;
-};
-struct Character {
-    string name;
-    bool sex;
-    Pokemon pokemons[6];
-    vector<Item>bag;
-    int money;
-};
-
 enum GameState {
     INITIAL_HOUSE,
     MAP_ONE,
     LAB_ONE,
 };
 
-void clearScreenAndPrompt() {
-    (void)system("cls");
-    cout << "PRESS / TO ENTER MENU" << endl;
-}
-
-void game_running() {
+void game_running(Character character) {
     // Iniciating the maps
     vector<vector<int>> houseMapMat(7, vector<int>(10, 0));
     vector<vector<int>> mapMat(20, vector<int>(20, 0));
+    vector<vector<int>> labMat(15, vector<int>(15, 0));
 
     int x = 2; // Initial x
     int y = 6; // Initial y
@@ -82,7 +51,6 @@ void game_running() {
         
         int optionPath = 0;
         (void)system("cls");
-        //cout << "PRESS / TO ENTER MENU" << endl;
 
         switch(currentState) {
             case INITIAL_HOUSE:
@@ -90,7 +58,9 @@ void game_running() {
                 seeMap(houseMapMat);
                 while(true) {
                     key = getch();
-                    if(movement(houseMapMat, key, x, y) == 3) {currentState = MAP_ONE; x = 16; y = 15; (void)system("cls"); break;};
+                    optionPath = movement(houseMapMat, key, x, y, character);
+                    if(optionPath == 3) {currentState = MAP_ONE; x = 16; y = 15; (void)system("cls"); break;}; // go to MAP_ONE
+                    if(optionPath == 2) {break;}; // MENU
                 }
             break;
             case MAP_ONE:
@@ -98,7 +68,20 @@ void game_running() {
                 seeMap(mapMat);
                 while(true) {
                     key = getch();
-                    if(movement(mapMat, key, x, y) == 3) {currentState = INITIAL_HOUSE; x = 5; y = 2; (void)system("cls"); break;}; // go to INITIAL_HOUSE
+                    optionPath = movement(mapMat, key, x, y, character);
+                    if(optionPath == 3) {currentState = INITIAL_HOUSE; x = 5; y = 2; (void)system("cls"); break;}; // go to INITIAL_HOUSE
+                    if(optionPath == 5) {currentState = LAB_ONE; x = 13; y = 7; (void)system("cls"); break;}; // go to LAB_ONE
+                    if(optionPath == 2) {break;}; // MENU
+                }
+            break;
+            case LAB_ONE:
+                labOne(labMat, x, y);
+                seeMap(labMat);
+                while(true) {
+                    key = getch();
+                    optionPath = movement(labMat, key, x, y, character);
+                    if(optionPath == 3) {currentState = MAP_ONE; x = 16; y = 5; (void)system("cls"); break;}; // go to MAP_ONE
+                    if(optionPath == 2) {break;}; // MENU
                 }
             break;
         }
@@ -108,6 +91,7 @@ void game_running() {
 int main() {
     int optionMenu = 0;
     bool isRunning = true;
+    Character character;
 
     while(isRunning) {
         showMenu();
@@ -115,7 +99,7 @@ int main() {
 
         switch(optionMenu) {
             case 1:
-                game_running();
+                game_running(character);
             break;
             case 2:
                 menu_about();

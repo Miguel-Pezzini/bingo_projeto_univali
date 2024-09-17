@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void houseMap(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial) {
+void houseMap(vector<vector<int>>& mat, int x, int y) {
   const vector<vector<int>> mapa = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -30,14 +30,14 @@ void houseMap(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial) {
         }
     }
 
-    if (xHouseInicial >= 0 && xHouseInicial < numRows && yHouseInicial >= 0 && yHouseInicial < numCols) {
-        mat[xHouseInicial][yHouseInicial] = 2;
+    if (x >= 0 && x < numRows && y >= 0 && y < numCols) {
+        mat[x][y] = 2;
     } else {
         cerr << "Erro: A posição inicial da casa está fora dos limites da matriz." << endl;
     }
 }
 
-void mapOne(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial) {
+void mapOne(vector<vector<int>>& mat, int x, int y) {
   const vector<vector<int>> mapa = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -48,13 +48,13 @@ void mapOne(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial) {
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 3, 4, 4, 0, 1},
+        {1, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
+        {1, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
+        {1, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
+        {1, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 1},
+        {1, 0, 4, 4, 4, 5, 4, 4, 4, 0, 0, 0, 0, 4, 4, 3, 4, 4, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -76,8 +76,49 @@ void mapOne(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial) {
         }
     }
 
-    if (xHouseInicial >= 0 && xHouseInicial < numRows && yHouseInicial >= 0 && yHouseInicial < numCols) {
-        mat[xHouseInicial][yHouseInicial] = 2;
+    if (x >= 0 && x < numRows && y >= 0 && y < numCols) {
+        mat[x][y] = 2;
+    } else {
+        cerr << "Erro: A posição inicial da casa está fora dos limites da matriz." << endl;
+    }
+}
+
+void labOne(vector<vector<int>>& mat, int x, int y) {
+  const vector<vector<int>> mapa = {
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1}
+};
+
+    int numRows = mapa.size();
+    int numCols = mapa[0].size();
+
+    if (mat.size() != numRows || mat[0].size() != numCols) {
+        cerr << "Erro: A matriz fornecida não tem o tamanho correto." << endl;
+        return;
+    }
+
+    // Copia o mapa inicial para a matriz m
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < numCols; j++) {
+            mat[i][j] = mapa[i][j];
+        }
+    }
+
+    if (x >= 0 && x < numRows && y >= 0 && y < numCols) {
+        mat[x][y] = 2;
     } else {
         cerr << "Erro: A posição inicial da casa está fora dos limites da matriz." << endl;
     }
@@ -109,6 +150,11 @@ void seeMap(vector<vector<int>>& mat) {
               break;
               case 4:
                 printf("\033[0;44m"); 
+                cout << " ";
+                printf("\033[0m");
+              break;
+              case 5:
+                printf("\033[0;43m"); 
                 cout << " ";
                 printf("\033[0m");
               break;

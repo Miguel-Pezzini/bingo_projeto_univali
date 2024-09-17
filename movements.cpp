@@ -21,7 +21,8 @@ void DrawPosition(int x, int y) {
     printf("@");
 }
 
-int movement(vector<vector<int>>& mat, char key, int &xPosicao, int &yPosicao) {
+int movement(vector<vector<int>>& mat, char key, int &xPosicao, int &yPosicao, Character character) {
+    if(key == '/') {menuInGame(character); return 2;}; // Menu;
     int newX = xPosicao;
     int newY = yPosicao;
     switch(key) {
@@ -45,6 +46,7 @@ int movement(vector<vector<int>>& mat, char key, int &xPosicao, int &yPosicao) {
         // Verifica o tipo do novo local na matriz
         if (mat[newX][newY] != 1 && mat[newX][newY] != 4) { // Se não for parede ou obstáculo
             if (mat[newX][newY] == 3) return 3; // Se passar pela porta 3
+            if (mat[newX][newY] == 5) return 5; // Se passar pela porta 5
 
             // Atualiza a matriz e o console
             ClearPosition(yPosicao, xPosicao); // Limpa a posição antiga
