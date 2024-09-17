@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 void houseMap(vector<vector<int>>& mat, int xHouseInicial, int yHouseInicial) {
   const vector<vector<int>> mapa = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},

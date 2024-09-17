@@ -1,42 +1,60 @@
 #include <iostream>
 #include <vector>
+#include <windows.h>
 #include "movements.h"
 
 using namespace std;
 
+void setCursorPosition(int x, int y) {
+    static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD coord = { (SHORT)x, (SHORT)y };
+    SetConsoleCursorPosition(hOut, coord);
+}
+
+void ClearPosition(int x, int y) {
+    setCursorPosition(x, y);
+    printf(" ");
+}
+
+void DrawPosition(int x, int y) {
+    setCursorPosition(x, y);
+    printf("@");
+}
+
 int movement(vector<vector<int>>& mat, char key, int &xPosicao, int &yPosicao) {
+    int newX = xPosicao;
+    int newY = yPosicao;
     switch(key) {
       case 'w':
-          if(mat[xPosicao - 1][yPosicao] == 1 || mat[xPosicao - 1][yPosicao] == 4) return 0; //Não fazer nada
-          if(mat[xPosicao - 1][yPosicao] == 3) return 3; // Passou pela porta 3
-          mat[xPosicao][yPosicao] = 0;
-          xPosicao--;
-          mat[xPosicao][yPosicao] = 2;
+          newX--;
       break;
       case 's':
-          if(mat[xPosicao + 1][yPosicao] == 1 || mat[xPosicao + 1][yPosicao] == 4) return 0; //Não fazer nada
-          if(mat[xPosicao + 1][yPosicao] == 3) return 3; // Passou pela porta 3
-          mat[xPosicao][yPosicao] = 0;
-          xPosicao++;
-          mat[xPosicao][yPosicao] = 2;
+          newX++;
       break;
       case 'd':
-          if(mat[xPosicao][yPosicao + 1] == 1 || mat[xPosicao][yPosicao + 1] == 4) return 0; //Não fazer nada
-          if(mat[xPosicao][yPosicao + 1] == 3) return 3; // Passou pela porta 3
-          mat[xPosicao][yPosicao] = 0;
-          yPosicao++;
-          mat[xPosicao][yPosicao] = 2;
+          newY++;
       break;
       case 'a':
-          if(mat[xPosicao][yPosicao - 1] == 1 || mat[xPosicao][yPosicao - 1] == 4) return 0; //Não fazer nada
-          if(mat[xPosicao][yPosicao - 1] == 3) return 3; // Passou pela porta 3
-          mat[xPosicao][yPosicao] = 0;
-          yPosicao--;
-          mat[xPosicao][yPosicao] = 2;
+          newY--;
       break;
       default:
         return 0;
     }
 
+    if (newX >= 0 && newX < mat.size() && newY >= 0 && newY < mat[0].size()) {
+        // Verifica o tipo do novo local na matriz
+        if (mat[newX][newY] != 1 && mat[newX][newY] != 4) { // Se não for parede ou obstáculo
+            if (mat[newX][newY] == 3) return 3; // Se passar pela porta 3
+
+            // Atualiza a matriz e o console
+            ClearPosition(yPosicao, xPosicao); // Limpa a posição antiga
+            mat[xPosicao][yPosicao] = 0; // Limpa a posição antiga na matriz
+            xPosicao = newX;
+            yPosicao = newY;
+            mat[xPosicao][yPosicao] = 2; // Atualiza a nova posição na matriz
+            DrawPosition(yPosicao, xPosicao); // Desenha o personagem na nova posição
+        }
+
     return 0;
+    }
 }

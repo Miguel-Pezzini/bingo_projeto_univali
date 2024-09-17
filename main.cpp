@@ -2,10 +2,13 @@
 #include <string.h>
 #include <windows.h>
 #include <vector>
+#include <io.h>
+#include <fcntl.h>
 #include "menu.h"
 #include "maps.h"
 #include "movements.h"
 using namespace std;
+
 // Pegar tecla
 CHAR getch() {
     DWORD mode, cc;
@@ -22,6 +25,8 @@ CHAR getch() {
     SetConsoleMode( h, mode );
     return c;
 }
+
+
 
 struct Attack {
     string name;
@@ -64,36 +69,37 @@ void game_running() {
     vector<vector<int>> houseMapMat(7, vector<int>(10, 0));
     vector<vector<int>> mapMat(20, vector<int>(20, 0));
 
-    int xHouseInicial = 2;
-    int yHouseInicial = 6;
-    int xMapOneInicial = 16;
-    int yMapOneInicial = 15;
+    int x = 2; // Initial x
+    int y = 6; // Initial y
 
     bool cityOne = true;
-    bool InitialHouse = true;
-    bool inMapOne = false;
 
     GameState currentState = INITIAL_HOUSE;
 
     char key;
 
     while(cityOne) {
-        houseMap(houseMapMat, xHouseInicial, yHouseInicial);
-        mapOne(mapMat, xMapOneInicial, yMapOneInicial);
+        
         int optionPath = 0;
-
-        clearScreenAndPrompt();
+        (void)system("cls");
+        //cout << "PRESS / TO ENTER MENU" << endl;
 
         switch(currentState) {
             case INITIAL_HOUSE:
+                houseMap(houseMapMat, x, y);
                 seeMap(houseMapMat);
-                key = getch();
-                if(movement(houseMapMat, key, xHouseInicial, yHouseInicial) == 3) {currentState = MAP_ONE;};
+                while(true) {
+                    key = getch();
+                    if(movement(houseMapMat, key, x, y) == 3) {currentState = MAP_ONE; x = 16; y = 15; (void)system("cls"); break;};
+                }
             break;
             case MAP_ONE:
+                mapOne(mapMat, x, y);
                 seeMap(mapMat);
-                key = getch();
-                if(movement(mapMat, key, xHouseInicial, yHouseInicial) == 3) {currentState = INITIAL_HOUSE; xHouseInicial = 5; yHouseInicial = 2;};
+                while(true) {
+                    key = getch();
+                    if(movement(mapMat, key, x, y) == 3) {currentState = INITIAL_HOUSE; x = 5; y = 2; (void)system("cls"); break;}; // go to INITIAL_HOUSE
+                }
             break;
         }
     }
