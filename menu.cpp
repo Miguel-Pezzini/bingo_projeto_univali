@@ -39,7 +39,7 @@ void menuInGame(Character character) {
                 if(sizeVector >= 1) {
                     cout<<"LIST OF POKEMONS: "<<endl;
                     for(int i = 0; i < sizeVector; i++) {
-                        cout << character.pokemons[i].name << " Level: "<< character.pokemons[i].level <<endl;
+                        cout << character.pokemons.at(i).name << " Level: "<< character.pokemons.at(i).level <<endl;
                     }
                 } else {
                     cout<<"YOU DON'T HAVE ANY POKEMONS!"<<endl;
@@ -52,7 +52,7 @@ void menuInGame(Character character) {
                 if(sizeVector >= 1) {
                     cout<<"YOUR BAG: "<<endl;
                     for(int i = 0; i < sizeVector; i++) {
-                        cout << character.bag[i].name <<endl;
+                        cout << character.bag.at(i).name <<endl;
                     }
                 } else {
                     cout<<"YOU DON'T HAVE ANY ITEMS!"<<endl;
@@ -60,7 +60,8 @@ void menuInGame(Character character) {
             break;
 
             case 3:
-                inMenu = false;
+                return;
+
             break;
             case 4:
                 exit(0);

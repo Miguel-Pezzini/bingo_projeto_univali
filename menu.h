@@ -1,39 +1,16 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "types.h"
+#include "items.h"
+#include "pokemons.h"
+#include "attacks.h"
+
 #include <vector>
 #include <string>
 
 using namespace std;
 
-enum PokemonType {
-    Fire,
-    Water,
-    Grass,
-    Electric,
-    Psychic,
-    Ice,
-    Dragon,
-    Fairy
-};
-struct Attack {
-    string name;
-    int power;
-    int levelToLearn;
-    PokemonType type;
-};
-struct Pokemon {
-    int id;
-    string name;
-    int level;
-    vector<Attack> attacks;
-    PokemonType type;
-};
-struct Item {
-    int id;
-    string name;
-    string type;
-};
 struct Character {
     string name;
     bool sex;

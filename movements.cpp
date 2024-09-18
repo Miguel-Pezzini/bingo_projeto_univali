@@ -47,6 +47,7 @@ int movement(vector<vector<int>>& mat, char key, int &xPosicao, int &yPosicao, C
         if (mat[newX][newY] != 1 && mat[newX][newY] != 4) { // Se não for parede ou obstáculo
             if (mat[newX][newY] == 3) return 3; // Se passar pela porta 3
             if (mat[newX][newY] == 5) return 5; // Se passar pela porta 5
+            if (mat[newX][newY] == 6) return 6; // Dialogo;
 
             // Atualiza a matriz e o console
             ClearPosition(yPosicao, xPosicao); // Limpa a posição antiga

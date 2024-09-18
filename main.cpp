@@ -4,9 +4,11 @@
 #include <vector>
 #include <io.h>
 #include <fcntl.h>
+#include "dialogs/dialogs.h"
 #include "menu.h"
 #include "maps.h"
 #include "movements.h"
+
 using namespace std;
 
 // Pegar tecla
@@ -40,6 +42,8 @@ void game_running(Character character) {
 
     int x = 2; // Initial x
     int y = 6; // Initial y
+
+    bool firstDialogWithProfessor = true;
 
     bool cityOne = true;
 
@@ -82,6 +86,7 @@ void game_running(Character character) {
                     optionPath = movement(labMat, key, x, y, character);
                     if(optionPath == 3) {currentState = MAP_ONE; x = 16; y = 5; (void)system("cls"); break;}; // go to MAP_ONE
                     if(optionPath == 2) {break;}; // MENU
+                    if(optionPath == 6) {dialogLabOne(character, firstDialogWithProfessor);break;};
                 }
             break;
         }
