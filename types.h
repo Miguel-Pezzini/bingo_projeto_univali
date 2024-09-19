@@ -10,7 +10,16 @@ enum class PokemonType {
     Psychic,
     Ice,
     Dragon,
-    Fairy
+    Fairy,
+    Bug,
+    Rock,
+    Ghost,
+    Dark,
+    Fighting,
+    Poison,
+    Ground,
+    Flying,
+    Steel,
 };
 enum class ItemType {
     Healing,

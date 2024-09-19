@@ -15,24 +15,18 @@ struct Pokemon {
     int id;
     string name;
     int hp;
+    int actualhp;
     int def;
     int level;
     int xpToUp;
     int xp;
     int levelToEvolve;
+    int idEvolution;
     vector<Attack> attacks;
     PokemonType type;
-
-    Pokemon(int id, string n, int hp, int def, int lvl, int xpToUp, int xp, int lvlToEvolve, vector<Attack> att, PokemonType t)
-        : id(id), name(n), hp(hp), def(def), level(lvl), xpToUp(xpToUp), xp(xp), levelToEvolve(lvlToEvolve), attacks(att), type(t) {}
-
-    Pokemon(int id, int level) {
-        initializeFromId(id, level);
-    }
 };
 
-void initializeFromId(int id, int level);
-
+Pokemon createPokemon(int id, int level);
 // POKEMONS ID:
 
 // 1. Bulbasaur

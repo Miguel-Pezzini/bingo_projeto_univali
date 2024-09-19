@@ -28,6 +28,11 @@ CHAR getch() {
     return c;
 }
 
+struct Route {
+    vector<int> levels;
+    vector<int> ids;
+};
+
 enum GameState {
     INITIAL_HOUSE,
     MAP_ONE,
@@ -39,6 +44,10 @@ void game_running(Character character) {
     vector<vector<int>> houseMapMat(7, vector<int>(10, 0));
     vector<vector<int>> mapMat(20, vector<int>(20, 0));
     vector<vector<int>> labMat(15, vector<int>(15, 0));
+
+    Route RouteOne;
+    RouteOne.levels = {2, 5};
+    RouteOne.ids = {10, 11, 13, 14, 16, 19};
 
     int x = 2; // Initial x
     int y = 6; // Initial y

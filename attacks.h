@@ -3,8 +3,9 @@
 
 #include "types.h"
 #include <string>
+#include <vector>
 
-//using namespace std;
+using namespace std;
 
 struct Attack {
     std::string name;
@@ -16,6 +17,6 @@ struct Attack {
     Attack(std::string n, int p, int acc, int lvlToLearn, PokemonType t): name(n), power(p), accuracy(acc), levelToLearn(lvlToLearn), type(t) {};
 };
 
-extern Attack Tackle;
+extern vector<Attack> attacks;
 
 #endif
