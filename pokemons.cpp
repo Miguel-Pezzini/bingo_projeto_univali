@@ -933,6 +933,164 @@ int pokemonEvolutionId(int id) {
     }
 }
 
+int pokemonSPEED(int id, int level) {
+    int baseSpeed;
+
+    switch (id) {
+        case 1:  baseSpeed = 45; break;  // Bulbasaur
+        case 2:  baseSpeed = 60; break;  // Ivysaur
+        case 3:  baseSpeed = 80; break;  // Venusaur
+        case 4:  baseSpeed = 65; break;  // Charmander
+        case 5:  baseSpeed = 80; break;  // Charmeleon
+        case 6:  baseSpeed = 100; break; // Charizard
+        case 7:  baseSpeed = 43; break;  // Squirtle
+        case 8:  baseSpeed = 58; break;  // Wartortle
+        case 9:  baseSpeed = 78; break;  // Blastoise
+        case 10: baseSpeed = 45; break;  // Caterpie
+        case 11: baseSpeed = 30; break;  // Metapod
+        case 12: baseSpeed = 70; break;  // Butterfree
+        case 13: baseSpeed = 40; break;  // Weedle
+        case 14: baseSpeed = 35; break;  // Kakuna
+        case 15: baseSpeed = 75; break;  // Beedrill
+        case 16: baseSpeed = 56; break;  // Pidgey
+        case 17: baseSpeed = 71; break;  // Pidgeotto
+        case 18: baseSpeed = 91; break;  // Pidgeot
+        case 19: baseSpeed = 72; break;  // Rattata
+        case 20: baseSpeed = 95; break;  // Raticate
+        case 21: baseSpeed = 60; break;  // Spearow
+        case 22: baseSpeed = 100; break; // Fearow
+        case 23: baseSpeed = 55; break;  // Ekans
+        case 24: baseSpeed = 80; break;  // Arbok
+        case 25: baseSpeed = 90; break;  // Pikachu
+        case 26: baseSpeed = 110; break; // Raichu
+        case 27: baseSpeed = 40; break;  // Sandshrew
+        case 28: baseSpeed = 65; break;  // Sandslash
+        case 29: baseSpeed = 45; break;  // Nidoran♀
+        case 30: baseSpeed = 55; break;  // Nidorina
+        case 31: baseSpeed = 76; break;  // Nidoqueen
+        case 32: baseSpeed = 50; break;  // Nidoran♂
+        case 33: baseSpeed = 65; break;  // Nidorino
+        case 34: baseSpeed = 85; break;  // Nidoking
+        case 35: baseSpeed = 35; break;  // Clefairy
+        case 36: baseSpeed = 60; break;  // Clefable
+        case 37: baseSpeed = 65; break;  // Vulpix
+        case 38: baseSpeed = 100; break; // Ninetales
+        case 39: baseSpeed = 45; break;  // Jigglypuff
+        case 40: baseSpeed = 70; break;  // Wigglytuff
+        case 41: baseSpeed = 55; break;  // Zubat
+        case 42: baseSpeed = 90; break;  // Golbat
+        case 43: baseSpeed = 55; break;  // Oddish
+        case 44: baseSpeed = 60; break;  // Gloom
+        case 45: baseSpeed = 75; break;  // Vileplume
+        case 46: baseSpeed = 55; break;  // Paras
+        case 47: baseSpeed = 60; break;  // Parasect
+        case 48: baseSpeed = 45; break;  // Venonat
+        case 49: baseSpeed = 70; break;  // Venomoth
+        case 50: baseSpeed = 50; break;  // Diglett
+        case 51: baseSpeed = 110; break; // Dugtrio
+        case 52: baseSpeed = 90; break;  // Meowth
+        case 53: baseSpeed = 115; break; // Persian
+        case 54: baseSpeed = 50; break;  // Psyduck
+        case 55: baseSpeed = 80; break;  // Golduck
+        case 56: baseSpeed = 90; break;  // Poliwag
+        case 57: baseSpeed = 65; break;  // Poliwhirl
+        case 58: baseSpeed = 70; break;  // Poliwrath
+        case 59: baseSpeed = 90; break;  // Abra
+        case 60: baseSpeed = 105; break; // Kadabra
+        case 61: baseSpeed = 120; break; // Alakazam
+        case 62: baseSpeed = 70; break;  // Machop
+        case 63: baseSpeed = 80; break;  // Machoke
+        case 64: baseSpeed = 90; break;  // Machamp
+        case 65: baseSpeed = 50; break;  // Bellsprout
+        case 66: baseSpeed = 55; break;  // Weepinbell
+        case 67: baseSpeed = 70; break;  // Victreebel
+        case 68: baseSpeed = 55; break;  // Tentacool
+        case 69: baseSpeed = 70; break;  // Tentacruel
+        case 70: baseSpeed = 80; break;  // Geodude
+        case 71: baseSpeed = 45; break;  // Graveler
+        case 72: baseSpeed = 55; break;  // Golem
+        case 73: baseSpeed = 60; break;  // Ponyta
+        case 74: baseSpeed = 90; break;  // Rapidash
+        case 75: baseSpeed = 15; break;  // Slowpoke
+        case 76: baseSpeed = 30; break;  // Slowbro
+        case 77: baseSpeed = 50; break;  // Magnemite
+        case 78: baseSpeed = 70; break;  // Magneton
+        case 79: baseSpeed = 60; break;  // Farfetch'd
+        case 80: baseSpeed = 65; break;  // Doduo
+        case 81: baseSpeed = 110; break; // Dodrio
+        case 82: baseSpeed = 85; break;  // Seel
+        case 83: baseSpeed = 70; break;  // Dewgong
+        case 84: baseSpeed = 40; break;  // Grimer
+        case 85: baseSpeed = 75; break;  // Muk
+        case 86: baseSpeed = 40; break;  // Shellder
+        case 87: baseSpeed = 70; break;  // Cloyster
+        case 88: baseSpeed = 80; break;  // Gastly
+        case 89: baseSpeed = 95; break;  // Haunter
+        case 90: baseSpeed = 110; break; // Gengar
+        case 91: baseSpeed = 70; break;  // Onix
+        case 92: baseSpeed = 40; break;  // Drowzee
+        case 93: baseSpeed = 70; break;  // Hypno
+        case 94: baseSpeed = 25; break;  // Krabby
+        case 95: baseSpeed = 50; break;  // Kingler
+        case 96: baseSpeed = 100; break; // Voltorb
+        case 97: baseSpeed = 140; break; // Electrode
+        case 98: baseSpeed = 55; break;  // Exeggcute
+        case 99: baseSpeed = 60; break;  // Exeggutor
+        case 100: baseSpeed = 50; break; // Cubone
+        case 101: baseSpeed = 80; break; // Marowak
+        case 102: baseSpeed = 87; break; // Hitmonlee
+        case 103: baseSpeed = 100; break; // Hitmonchan
+        case 104: baseSpeed = 30; break; // Lickitung
+        case 105: baseSpeed = 60; break; // Koffing
+        case 106: baseSpeed = 60; break; // Weezing
+        case 107: baseSpeed = 45; break; // Rhyhorn
+        case 108: baseSpeed = 40; break; // Rhydon
+        case 109: baseSpeed = 70; break; // Chansey
+        case 110: baseSpeed = 55; break; // Tangela
+        case 111: baseSpeed = 90; break; // Kangaskhan
+        case 112: baseSpeed = 60; break; // Horsea
+        case 113: baseSpeed = 65; break; // Seadra
+        case 114: baseSpeed = 63; break; // Goldeen
+        case 115: baseSpeed = 68; break; // Seaking
+        case 116: baseSpeed = 50; break; // Staryu
+        case 117: baseSpeed = 115; break; // Starmie
+        case 118: baseSpeed = 60; break; // Mr. Mime
+        case 119: baseSpeed = 105; break; // Scyther
+        case 120: baseSpeed = 95; break; // Jynx
+        case 121: baseSpeed = 87; break; // Electabuzz
+        case 122: baseSpeed = 93; break; // Magmar
+        case 123: baseSpeed = 85; break; // Pinsir
+        case 124: baseSpeed = 100; break; // Tauros
+        case 125: baseSpeed = 80; break; // Magikarp
+        case 126: baseSpeed = 81; break; // Gyarados
+        case 127: baseSpeed = 60; break; // Lapras
+        case 128: baseSpeed = 48; break; // Ditto
+        case 129: baseSpeed = 55; break; // Eevee
+        case 130: baseSpeed = 65; break; // Vaporeon
+        case 131: baseSpeed = 130; break; // Jolteon
+        case 132: baseSpeed = 65; break; // Flareon
+        case 133: baseSpeed = 60; break; // Porygon
+        case 134: baseSpeed = 55; break; // Omanyte
+        case 135: baseSpeed = 60; break; // Omastar
+        case 136: baseSpeed = 55; break; // Kabuto
+        case 137: baseSpeed = 80; break; // Kabutops
+        case 138: baseSpeed = 130; break; // Aerodactyl
+        case 139: baseSpeed = 30; break; // Snorlax
+        case 140: baseSpeed = 100; break; // Articuno
+        case 141: baseSpeed = 100; break; // Zapdos
+        case 142: baseSpeed = 90; break; // Moltres
+        case 143: baseSpeed = 60; break; // Dratini
+        case 144: baseSpeed = 80; break; // Dragonair
+        case 145: baseSpeed = 100; break; // Dragonite
+        case 146: baseSpeed = 130; break; // Mewtwo
+        case 147: baseSpeed = 100; break; // Mew
+        default: baseSpeed = 50; break; // Valor padrão
+    }
+
+    // Cálculo de Velocidade (fórmula simplificada)
+    return static_cast<int>((baseSpeed * 2 * level) / 100) + 5;
+}
+
 vector<Attack> pokemonAttacks(int id, int level) {
     vector<Attack> pokemonAttacks;
     PokemonType type = pokemonType(id);
@@ -955,6 +1113,7 @@ Pokemon createPokemon(int id, int level) {
     p.hp = pokemonHP(id, level);
     p.actualhp = p.hp;
     p.def = pokemonDEF(id, level);
+    p.speed = pokemonSPEED(id, level);
     p.level = level;
     p.xp = 0;
     p.xpToUp = pokemonXPTOUP(level);

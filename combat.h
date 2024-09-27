@@ -7,5 +7,6 @@
 #include <ctime>    // Para time()
 
 using namespace std;
-void inCombat(Character character, int route);
+bool inCombatInBush(Character &character, int route);
+
 #endif

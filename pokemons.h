@@ -17,6 +17,7 @@ struct Pokemon {
     int hp;
     int actualhp;
     int def;
+    int speed;
     int level;
     int xpToUp;
     int xp;

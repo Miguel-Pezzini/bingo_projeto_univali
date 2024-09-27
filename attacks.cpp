@@ -51,5 +51,7 @@ vector<Attack> attacks = {
         Attack("Lick", 30, 100, 1, PokemonType::Ghost),
         Attack("Hydro Pump", 110, 80, 43, PokemonType::Water),
         Attack("Whirlpool", 35, 85, 15, PokemonType::Water),
-        Attack("Hydro Cannon", 150, 90, 50, PokemonType::Water)
+        Attack("Hydro Cannon", 150, 90, 50, PokemonType::Water),
+        Attack("Bug Bite", 60, 100, 1, PokemonType::Bug),
+        Attack("String Shot", 0, 100, 1, PokemonType::Bug), 
 };

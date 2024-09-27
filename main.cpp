@@ -35,11 +35,31 @@ enum GameState {
     LAB_ONE,
 };
 
+GameState returnCP(GameState currentState, int &x, int &y, Character &character) {
+    int size = character.pokemons.size();
+    for(int i = 0; i < size; i++) {
+        character.pokemons[i].actualhp = character.pokemons[i].hp;
+    }
+    switch (currentState) {
+    case MAP_ONE:
+        x = 5, 
+        y = 2,
+        currentState = INITIAL_HOUSE;
+    break;
+    default:
+        break;
+    }
+
+    return currentState;
+}
+
 void game_running(Character character) {
     // Iniciating the maps
     vector<vector<int>> houseMapMat(7, vector<int>(10, 0));
     vector<vector<int>> mapMat(20, vector<int>(20, 0));
     vector<vector<int>> labMat(15, vector<int>(15, 0));
+
+    bool teamDead = false;
 
     int x = 2; // Initial x
     int y = 6; // Initial y
@@ -77,7 +97,13 @@ void game_running(Character character) {
                     if(optionPath == 3) {currentState = INITIAL_HOUSE; x = 5; y = 2; (void)system("cls"); break;}; // go to INITIAL_HOUSE
                     if(optionPath == 5) {currentState = LAB_ONE; x = 13; y = 7; (void)system("cls"); break;}; // go to LAB_ONE
                     if(optionPath == 2) {break;}; // MENU
-                    if(optionPath == 7) {inCombat(character, 1);break;};
+                    if(optionPath == 7) {
+                        teamDead = inCombatInBush(character, 1);
+                        if(teamDead) {
+                            currentState = returnCP(currentState, x, y, character);
+                        }
+                        break;
+                        };
                 }
             break;
             case LAB_ONE:
